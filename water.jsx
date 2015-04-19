@@ -243,73 +243,70 @@ var PageLayout = React.createClass({
         }
 
         return (
-            <div id >
+            <div id="body">
                 <center><h1>WaterLog</h1><h2>The Scientific Irrigation Scheduling System that Saves Millions</h2></center>
-                <Map latitude={latitude} longitude={longitude} /><br/>
+                <Map latitude={latitude} longitude={longitude} />
                 
+                <legend><h3>Do you want to save some money? Maybe some water, too?</h3></legend>
 
-                <legend><h3>some question</h3></legend>
-
-                <div id="pure-table">
-                    <div id="tbody">
-                        <div id="row">
-                            <div id="name"><h3>CMIS Station</h3></div>
-                            <div id="dropdown"><StationSelection stations={this.state.stations}
+                <div className="table">
+                    <div id="body-dropdowns">
+                        <div className="row">
+                            <div className="name"><h4>CMIS Station</h4></div>
+                            <div className="dropdown"><StationSelection stations={this.state.stations}
                                                   selected={this.state.station}
                                                   onChange={this.handleStationSelectionChanged} /></div>
                         </div>
-                        <div id="row">
-                            <div id="name"><h3>Select Crop</h3></div>
-                            <div id="dropdown"><CropSelection value={this.state.crop}
+                        <div className="row">
+                            <div className="name"><h4>Select Crop</h4></div>
+                            <div className="dropdown"><CropSelection value={this.state.crop}
                                                onChange={this.handleCropChanged} /></div>
                         </div>
-                        <div id="row">
-                            <div id="name"><h3>Crop Stage</h3></div>
-                            <div id="dropdown"><StageSelection value={this.state.stage}
+                        <div className="row">
+                            <div className="name"><h4>Crop Stage</h4></div>
+                            <div className="dropdown"><StageSelection value={this.state.stage}
                                                 options={cropStages}
                                                 onChange={this.handleStageChanged} /></div>
                         </div>
-                        <div id="row">
-                            <div id="name"><h3>Distribution Uniformity</h3></div>
-                            <div id="dropdown"><DistributionUniformitySelection value={this.state.distributionUniformity}
+                        <div className="row">
+                            <div className="name"><h4>Distribution Uniformity</h4></div>
+                            <div className="dropdown"><DistributionUniformitySelection value={this.state.distributionUniformity}
                                                                  onChange={this.handleDistributionUniformityChanged} /></div>
                         </div>
                     </div>
                 </div>
 
-                <table class="pure-table">
-                    <tbody>
-                        <tr>
-                            <td><h3>Set Area (acres)</h3></td>
-                            <td><input type="text"
+                <div className="table">
+                    <div id="body-textentry">
+                        <div className="row">
+                            <div className="name"><h4>Set Area (acres)</h4></div>
+                            <div className="textentry"><input type="text"
                                        placeholder="100"
                                        onChange={this.handleAreaChanged}>
                                     {this.state.area}
-                                </input></td>
-                        </tr>
-                        <tr>
-                            <td><h3>Water</h3></td>
-                            <td><input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/></td>
-                        </tr>
-                        <tr>
-                            <td>thing 1</td>
-                            <td>some text</td>
-                        </tr>
-                        <tr>
-                            <td>thing 2</td>
-                            <td>some more text</td>
-                        </tr>
-                    </tbody>
-                </table>
+                                </input></div>
+                        </div>
+                        <div className="row">
+                            <div className="name"><h4>Water (gallons)</h4></div>
+                            <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/></div>
+                        </div>
+                        <div className="row">
+                            <div className="name"><h4>Another thing</h4></div>
+                            <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="changethis" name="changethis" placeholder="changethis"/></div>
+                        </div>
+                        <div className="row">
+                            <div className="name"><h4>And another thing</h4></div>
+                            <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="changethis" name="changethis" placeholder="changethis"/></div>
+                        </div>
+                    </div>
+                </div>
 
-                <table class="pure-table">
-                    <tbody>
-                        <tr>
-                            <td><button class="pure-button pure-button-primary" onClick={this.handleAnswerClick}>Calculate</button></td>
-                            <td>{theAnswer}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="table">
+                    <div className="row">
+                        <div className="name"><button class="pure-button pure-button-primary" onClick={this.handleAnswerClick}>Calculate</button></div>
+                        <div className="answer">{theAnswer}</div>
+                    </div>
+                </div>
             </div>
         );
     },
