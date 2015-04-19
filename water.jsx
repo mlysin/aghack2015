@@ -34,8 +34,6 @@ var ExampleApplication = React.createClass({
         console.log(this.state.stations);
         return (
             <div>
-                <MapComponent latitude={something} longitude={something else}/>
-                this.props.latitude, this.props.longitude
                 The ETO was {this.state.eto}
             </div>
         );
@@ -70,5 +68,92 @@ var ExampleApplication = React.createClass({
                 }
             }.bind(this)
         });
+    }
+});
+
+var Map = React.createClass({
+    render: function () {
+        return (
+            <div>
+                Here&rsquo;s where the map goes... Latitude is {this.props.latitude} longitude is {this.props.longitude}
+            </div>
+        );
+    }
+})
+
+var PageLayout = React.createClass({
+    render: function () {
+        return (
+            <div>
+                <h1>WaterLog</h1>
+                <Map latitude="30" longitude="30"/>
+                <h2>What&rsquo;s Your ET rate</h2><br/>
+                <form className="form-horizontal" name="noname">
+                    <fieldset style={{textAlign:'center'}}>
+                    <legend>Step 1: Master Inputs</legend>
+                    <div className="master-info">
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="CIMIS" name="CIMIS" placeholder="CIMIS Station"/>
+                        </div>
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="DU" name="DU" placeholder="Distribution Uniformity"/>
+                        </div>
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="ECa" name="ECa" placeholder="Extract Threshold"/>
+                        </div>
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="ECw" name="ECw" placeholder="Water Threshold"/>
+                        </div>
+                    </div>
+                    </fieldset>
+
+                    <fieldset style={{textAlign:'center'}}>
+                    <legend>Step 2: Irrigation Set 1</legend>
+                    <div className="Irrigation Set 1">
+                        <div className="col-md-4">
+                            <label>Select Crop</label>
+                            <select id = "crop">
+                                <option value = "1">Pistachio</option>
+                                <option value = "2">Almond</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <label>Select Stage</label>
+                            <select id = "crop">
+                                <option value = "1">Early</option>
+                                <option value = "2">Medium</option>
+                                <option value = "3">Late</option>
+                            </select>
+                        </div>
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="area" name="area" placeholder="Area"/>
+                        </div>
+                        <div className="col-md-4">
+                            <input type="text" className="form-control" id="gpm" name="gpm" placeholder="GPM (meters)"/>
+                        </div>
+                    </div>
+                    </fieldset>
+                </form>
+
+                <form>
+                   <fieldset>
+                      <legend>Selecting elements</legend>
+                      <p>
+                         <label>Select list</label>
+                         <select id = "crop">
+                           <option value = "1">Pistachio</option>
+                           <option value = "2">Almond</option>
+                         </select>
+                      </p>
+                   </fieldset>
+                </form>
+
+                <div className="form-group">
+                    <div className="col-md-6">
+                        <center><button type="submit" value="Submit" className="answer">Answer</button></center>
+                    </div>
+                </div>
+            </div>
+        );
     }
 });
