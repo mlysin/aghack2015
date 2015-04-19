@@ -221,6 +221,8 @@ var PageLayout = React.createClass({
             gpm: null,
             area: null,
             eto: null,
+            ece: null,
+            ecw: null
         };
     },
     getStationFromStationNumber: function (stationNumber) {
@@ -235,10 +237,18 @@ var PageLayout = React.createClass({
         var longitude = station ? station.longitude : "-120.3591";
 
         var theAnswer = null;
-        if (this.state.eto && this.state.area && this.state.gpm) {
+        if (this.state.eto && this.state.area && this.state.gpm && this.state.ece && this.state.ecw) {
             debugger;
             var kc = getKc(this.state.crop, this.state.stage);
-            var flowRate = this.calculateWateringHours(this.state.eto, kc, this.state.gpm, this.state.area);
+            var flowRate = this.calculateWateringHours(
+                this.state.eto,
+                kc,
+                this.state.gpm,
+                this.state.area,
+                this.state.ece,
+                this.state.ecw,
+                this.state.distributionUniformity
+            );
             theAnswer = <div>Answer is {flowRate}</div>;
         }
 
@@ -291,12 +301,12 @@ var PageLayout = React.createClass({
                             <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/></div>
                         </div>
                         <div className="row">
-                            <div className="name"><h4>Another thing</h4></div>
-                            <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="changethis" name="changethis" placeholder="changethis"/></div>
+                            <div className="name"><h4>Salinity Tolerance (EC<sub>e</sub>)</h4></div>
+                            <div className="textentry"><input type="text" onChange={this.handleECEChange} className="form-control" id="changethis" name="changethis" placeholder="1.2"/></div>
                         </div>
                         <div className="row">
-                            <div className="name"><h4>And another thing</h4></div>
-                            <div className="textentry"><input type="text" onChange={this.handleGPMChange} className="form-control" id="changethis" name="changethis" placeholder="changethis"/></div>
+                            <div className="name"><h4>Water Salinity (EC<sub>w</sub>)</h4></div>
+                            <div className="textentry"><input type="text" onChange={this.handleECWChange} className="form-control" id="changethis" name="changethis" placeholder="0.8"/></div>
                         </div>
                     </div>
                 </div>
@@ -330,6 +340,14 @@ var PageLayout = React.createClass({
         event.preventDefault();
         this.setState({gpm: event.target.value});
     },
+    handleECEChange: function(event) {
+        event.preventDefault();
+        this.setState({ece: event.target.value});
+    },
+    handleECWChange: function(event) {
+        event.preventDefault();
+        this.setState({ecw: event.target.value});
+    },
     handleAnswerClick: function () {
         this.getETO(this.state.station);
         var eto = 1;
@@ -337,12 +355,13 @@ var PageLayout = React.createClass({
     componentDidMount: function () {
         this.getCMISStations();
     },
-    calculateWateringHours: function (eto, kc, gallonsPerMinute, acres) {
+    calculateWateringHours: function (eto, kc, gallonsPerMinute, acres, ece, ecw, du) {
         var sqFt = 43560 * parseFloat(acres);
         var inchesPerHour = 96.3 * parseFloat(gallonsPerMinute) / sqFt;
         var etc = parseFloat(eto) * kc;
-        var hours = etc / inchesPerHour;
-        return hours;
+        var hoursNet = etc / inchesPerHour;
+        var lr = (ecw / (5*ece - ecw));
+        return hoursNet / (du * (1 - (lr)));
     },
     getETO: function (station) {
         var yesterday = new Date();
@@ -365,7 +384,7 @@ var PageLayout = React.createClass({
                 }
             }.bind(this)
         });
-    } ,   
+    },
     getCMISStations: function () {
         $.ajax({
             url: 'http://et.water.ca.gov/api/station',
