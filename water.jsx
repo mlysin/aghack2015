@@ -231,8 +231,8 @@ var PageLayout = React.createClass({
     render: function () {
         var station = this.getStationFromStationNumber(this.state.station);
         var cropStages = getCropStages(this.state.crop);
-        var latitude = station ? station.latitude : "30";
-        var longitude = station ? station.longitude : "30";
+        var latitude = station ? station.latitude : "36.1397";
+        var longitude = station ? station.longitude : "-120.3591";
 
         var theAnswer = null;
         if (this.state.eto && this.state.area && this.state.gpm) {
