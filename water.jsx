@@ -243,46 +243,50 @@ var PageLayout = React.createClass({
         }
 
         return (
-            <div>
-                <center><h1>WaterLog™</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2></center>
+            <div id >
+                <center><h1>WaterLog</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2></center>
                 <Map latitude={latitude} longitude={longitude} /><br/>
                 
-                    <fieldset style={{textAlign:'center'}}>
-
-
+                    
                     <legend><h3>Enter the Following </h3></legend>
 
-                    
                     <div className="form">
 
-
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>CMIS Station</h3></legend>
                         <div id="dropdown">
-                            <label>CMIS Station </label>
                             <div id="entry">
                                 <StationSelection stations={this.state.stations}
                                               selected={this.state.station}
                                               onChange={this.handleStationSelectionChanged} />
                             </div>
                         </div>
+                        </fieldset>
 
-
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>Select Crop</h3></legend>
                         <div id="dropdown">
-                            <label>Select Crop </label>
                             <div id="entry">
                                 <CropSelection value={this.state.crop}
                                            onChange={this.handleCropChanged} />
                             </div>
-                       </div>
+                        </div>
+                        </fieldset>
+
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>Crop Stage</h3></legend>
                         <div id="dropdown">
-                            <label>Crop Stage </label>
                             <div id="entry">
                                 <StageSelection value={this.state.stage}
                                             options={cropStages}
                                             onChange={this.handleStageChanged} />
                             </div>
-                       </div>                       
+                        </div> 
+                        </fieldset>
+
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>Set Area (acres)</h3></legend>
                         <div id="type-in">
-                            <label>Set Area (acres) </label>
                             <div id="entry">
                                 <input type="text"
                                        placeholder="100"
@@ -291,21 +295,28 @@ var PageLayout = React.createClass({
                                 </input>
                             </div>
                         </div>
+                        </fieldset>
+
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>Distribution Uniformity</h3></legend>
                         <div id="dropdown">
-                            <label>Distribution Uniformity </label>
                             <div id="entry">
                                 <DistributionUniformitySelection value={this.state.distributionUniformity}
                                                              onChange={this.handleDistributionUniformityChanged} />
                             </div>
                         </div>
+                        </fieldset>
+
+                        <fieldset style={{textAlign:'center'}}>
+                        <legend><h3>Water</h3></legend>
                         <div className="type-in">
-                            <label>Water </label>
                             <div id="entry">
                                 <input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
                             </div>
                         </div>
+                        </fieldset>
+
                     </div>
-                    </fieldset>
 
 
                 <div id="answer">
