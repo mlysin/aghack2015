@@ -152,9 +152,8 @@ var PageLayout = React.createClass({
         var longitude = station ? station.longitude : "30";
         return (
             <div>
-                <h1>WaterLog</h1>
-                <Map latitude={latitude} longitude={longitude} />
-                <h2>Determine Your Evapotranspiration (ET) Rate</h2><br/>
+                <h1>WaterLog</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2>
+                <Map latitude={latitude} longitude={longitude} /><br/>
                 <form className="form-horizontal" name="noname">
                     <fieldset style={{textAlign:'center'}}>
                     <legend><h3>Step 1: Master Inputs </h3></legend>
@@ -171,12 +170,12 @@ var PageLayout = React.createClass({
                                                              onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
-                            <label>Select Crop</label>
+                            <label>Select Crop </label>
                             <CropSelection value={this.state.crop}
                                            onChange={this.handleCropChanged} />
                        </div>
                         <div className="col-md-4">
-                            <label>Select Crop Stage</label>
+                            <label>Select Crop Stage </label>
                             <StageSelection value={this.state.stage}
                                             options={cropStages}
                                             onChange={this.handleStageChanged} />
@@ -210,7 +209,7 @@ var PageLayout = React.createClass({
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="area" name="area" placeholder="Area"/>
+                            <input type="text" className="form-control" id="area" name="area" placeholder="Area (acres)"/>
                         </div>
                         <div className="col-md-4">
                             <input type="text" className="form-control" id="gpm" name="gpm" placeholder="GPM (meters)"/>
