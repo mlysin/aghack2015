@@ -1,6 +1,71 @@
+var pistachioStages = [
+  {
+    "stage": "Bloom (kc=0.07)",
+    "kc": '0.07'
+  },
+  {
+    "stage": "Leaf-out (kc=0.44)",
+    "kc": '0.44'
+  },
+  {
+    "stage": "Shell Expansion (kc=0.44)",
+    "kc": '0.44'
+  },
+  {
+    "stage": "Shell Expansion (kc=0.68)",
+    "kc": '0.68'
+  },
+  {
+    "stage": "Shell Hardening (kc=0.93)",
+    "kc": '0.93'
+  },
+  {
+    "stage": "Shell Hardening  (kc=1.10)",
+    "kc": '1.1'
+  },
+  {
+    "stage": "Nut Fill (kc=1.19)",
+    "kc": '1.19'
+  },
+  {
+    "stage": "Nut Fill Shell Split (kc=1.19)",
+    "kc": '1.19'
+  },
+  {
+    "stage": "Shell Splits (kc=0.99)",
+    "kc": '0.99'
+  },
+  {
+    "stage": "Hull Slip (kc=0.99)",
+    "kc": '0.99'
+  },
+  {
+    "stage": "Harvest (kc=0.87)",
+    "kc": '0.87'
+  },
+  {
+    "stage": "Harvest (kc=0.67)",
+    "kc": '0.67'
+  },
+  {
+    "stage": "Harvest (kc=0.07)",
+    "kc": '0.07'
+  },
+  {
+    "stage": "Post-harvest (kc=0.01)",
+    "kc": '0.01'
+  },
+  {
+    "stage": "Dormancy (kc=0.01)",
+    "kc": '0.01'
+  }
+]
+
 function getCropStages(crop) {
     if (crop == "Almonds") {
         return ["Babies", "Teenagers", "Adults", "Dead"]
+    } else {
+        return pistachioStages;
     }
 }
 
@@ -41,7 +106,6 @@ var ExampleApplication = React.createClass({
                 dataItems: 'day-eto'
             },
             success: function (response) {
-                debugger;
                 if (this.isMounted()) {
                     this.setState({
                         eto: response.Data.Providers[0].Records[0].DayEto.Value
@@ -89,7 +153,6 @@ var CropSelection = React.createClass({
         )
     },
     handleChange: function (event) {
-        debugger;
         event.preventDefault();
         this.props.onChange(event.target.value);
     }
@@ -97,11 +160,10 @@ var CropSelection = React.createClass({
 
 var StageSelection = React.createClass({
     render: function () {
-        debugger;
         return (
             <select value={this.props.value} onChange={this.handleChange}>
                 {this.props.options.map(function (option) {
-                    return <option key={option} value={option}>{option}</option>
+                    return <option key={option.stage} value={option.stage}>{option.stage}</option>
                 })}
             </select>
         )
@@ -135,7 +197,7 @@ var PageLayout = React.createClass({
 
             distributionUniformity: "0.95",
             station: "2",
-            crop: "Almonds",
+            crop: "Pistachios",
             stage: null,
             area: null
         };
@@ -165,51 +227,28 @@ var PageLayout = React.createClass({
                                               onChange={this.handleStationSelectionChanged} />
                         </div>
                         <div className="col-md-4">
-                            <label>Distribution Uniformity </label>
-                            <DistributionUniformitySelection value={this.state.distributionUniformity}
-                                                             onChange={this.handleDistributionUniformityChanged} />
-                        </div>
-                        <div className="col-md-4">
-                            <label>Extract Threshold </label>
+                            <label>Select Crop </label>
                             <CropSelection value={this.state.crop}
                                            onChange={this.handleCropChanged} />
                        </div>
                         <div className="col-md-4">
-                            <label>Water Threshold </label>
+                            <label>Crop Stage </label>
                             <StageSelection value={this.state.stage}
                                             options={cropStages}
                                             onChange={this.handleStageChanged} />
                        </div>                       
                         <div className="col-md-4">
+                            <label>Set Area (acres) </label>
                             <input type="text"
-                                   placeholder="Set Area (acres)"
+                                   placeholder="100"
                                    onChange={this.handleAreaChanged}>
                                 {this.state.area}
                             </input>
                         </div>
-                    </div>
-                    </fieldset>
-
-                    <fieldset style={{textAlign:'center'}}>
-                    <legend><h3>Step 2: Irrigation Set 1 </h3></legend>
-                    <div className="Irrigation Set 1">
                         <div className="col-md-4">
-                            <label>Crop </label>
-                            <select id = "crop">
-                                <option value = "1">Pistachio</option>
-                                <option value = "2">Almond</option>
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <label>Stage </label>
-                            <select id = "crop">
-                                <option value = "1">Early</option>
-                                <option value = "2">Medium</option>
-                                <option value = "3">Late</option>
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <input type="text" className="form-control" id="area" name="area" placeholder="Acreage Area"/>
+                            <label>Select Distribution Uniformity </label>
+                            <DistributionUniformitySelection value={this.state.distributionUniformity}
+                                                             onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
                             <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
