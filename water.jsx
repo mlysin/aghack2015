@@ -240,7 +240,7 @@ var PageLayout = React.createClass({
         if (this.state.eto && this.state.area && this.state.gpm && this.state.ece && this.state.ecw) {
             debugger;
             var kc = getKc(this.state.crop, this.state.stage);
-            var flowRate = this.calculateWateringHours(
+            var wateringHours = this.calculateWateringHours(
                 this.state.eto,
                 kc,
                 this.state.gpm,
@@ -249,7 +249,11 @@ var PageLayout = React.createClass({
                 this.state.ecw,
                 this.state.distributionUniformity
             );
-            theAnswer = <div>Answer is {flowRate}</div>;
+
+            var hours = Math.floor(wateringHours);
+            var minutes = Math.floor((wateringHours - hours) * 60);
+
+            theAnswer = <div>You should irrigate for {hours} hours and {minutes} minutes.</div>;
         }
 
         return (
@@ -257,12 +261,12 @@ var PageLayout = React.createClass({
                 <center><h1>WaterLog</h1><h2>The Scientific Irrigation Scheduling System that Saves Millions</h2></center>
                 <Map latitude={latitude} longitude={longitude} />
                 
-                <legend><h3>Do you want to save some money? Maybe some water, too?</h3></legend>
+                <div className="header">Do you want to save some money? Maybe some water, too?</div>
 
                 <div className="table">
-                    <div id="body-dropdowns">
+                    <div id="body-dropdowns" className="clearfix">
                         <div className="row">
-                            <div className="name"><h4>CMIS Station</h4></div>
+                            <div className="name"><h4 title="The nearest CIMIS station for ET observation">CIMIS Station</h4></div>
                             <div className="dropdown"><StationSelection stations={this.state.stations}
                                                   selected={this.state.station}
                                                   onChange={this.handleStationSelectionChanged} /></div>
@@ -282,12 +286,9 @@ var PageLayout = React.createClass({
                             <div className="name"><h4>Distribution Uniformity</h4></div>
                             <div className="dropdown"><DistributionUniformitySelection value={this.state.distributionUniformity}
                                                                  onChange={this.handleDistributionUniformityChanged} /></div>
-                        </div>
+                        </div>                    
                     </div>
-                </div>
-
-                <div className="table">
-                    <div id="body-textentry">
+                    <div id="body-textentry" className="clearfix">
                         <div className="row">
                             <div className="name"><h4>Set Area (acres)</h4></div>
                             <div className="textentry"><input type="text"
@@ -312,8 +313,14 @@ var PageLayout = React.createClass({
                 </div>
 
                 <div className="table">
-                    <div className="row">
-                        <div className="name"><button class="pure-button pure-button-primary" onClick={this.handleAnswerClick}>Calculate</button></div>
+                    <div className="buttoncontainer">
+                        <div className="buttonthing">
+                            <button class="pure-button pure-button-primary" onClick={this.handleAnswerClick}>
+                                Calculate watering duration
+                            </button>
+                        </div>
+                    </div>
+                    <div className="answercontainer">
                         <div className="answer">{theAnswer}</div>
                     </div>
                 </div>

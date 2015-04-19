@@ -14,12 +14,17 @@ h2 {
 	margin-bottom:0.1em; 
 	color: #000000;
 }
-h3 { 
-	font-family: 'Open Sans', sans-serif;
-	margin-top: 0.4em; 
-	margin-bottom:3em;
-	margin-left: 50%;
+
+.header { 
+  font-family: 'Open Sans', sans-serif;
+  display: block;
+  margin: 0 auto;
+  font-size: 20pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px auto;
 }
+
 h4 {
 	font-family: 'Open Sans', sans-serif;
 	margin-top: 0.5em; 
@@ -30,11 +35,26 @@ body {
 	font-family: 'Open Sans', sans-serif; 
 	background-color: #ffffff;
 }
+
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
+
 #body {
 	position: center;
 }
 
 #body-dropdowns { 
+	display: inline-block;
 	width: 50%; 
 	height: 100%; 
 	position: left; 
@@ -43,6 +63,7 @@ body {
 	padding: 0px; 
 }
 #body-textentry {
+	display: inline-block;
 	width: 50%; 
 	height: 100%; 
 	position: left; 
@@ -67,7 +88,39 @@ body {
 	width: 50%;
 	height: 100%
 }
-.answer {
-	float: right;
+
+.dropdown > select {
 	width: 100%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;	
 }
+
+.textentry {
+	width: 100%;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.answer > div {
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.buttonthing {
+	text-align: center;
+}
+
+.buttonthing > button {
+  font-size: 20px;
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background-color: rgb(55, 110, 229);
+  color: whitesmoke;
+}
+
+
