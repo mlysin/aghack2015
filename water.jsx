@@ -68,20 +68,42 @@ var Map = React.createClass({
 var StationSelection = React.createClass({
     render: function () {
         return (
-            <select>
+            <select value={this.props.selected} onChange={this.handleStationSelected}>
                 {this.props.stations.map(function (station) {
                     return <option key={station.number} value={station.number}>{station.name}</option>
-
                 })}
             </select>
         )
+    },
+    handleStationSelected: function (event) {
+        event.preventDefault();
+        this.props.onChange(event.target.value);
     }
 })
+
+var DistributionUniformitySelection = React.createClass({
+    render: function () {
+        return (
+            <select value={this.props.selected} onChange={this.handleChange}>
+                <option value="0.95">Good Condition (DU=0.95)</option>
+                <option value="0.80">Okay Condition (DU=0.80)</option>
+                <option value="0.65">Poor Condition (DU=0.65)</option>
+            </select>
+        )
+    },
+    handleChange: function (event) {
+        event.preventDefault();
+        this.props.onChange(event.target.value);
+    }
+});
 
 var PageLayout = React.createClass({
     getInitialState: function () {
         return {
-            stations: []
+            stations: [],
+
+            distributionUniformity: "0.95",
+            station: null,
         };
     },
     render: function () {
@@ -96,10 +118,14 @@ var PageLayout = React.createClass({
                     <div className="master-info">
                         <div className="col-md-4">
                             <label>Select CMIS Station</label>
-                            <StationSelection stations={this.state.stations}/>
+                            <StationSelection stations={this.state.stations}
+                                              selected={this.props.station}
+                                              onChange={this.handleStationSelectionChanged} />
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="DU" name="DU" placeholder="Distribution Uniformity"/>
+                            <label>Select Distribution Uniformity</label>
+                            <DistributionUniformitySelection value={this.state.distributionUniformity}
+                                                             onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
                             <input type="text" className="form-control" id="ECa" name="ECa" placeholder="Extract Threshold"/>
@@ -158,6 +184,14 @@ var PageLayout = React.createClass({
                 </div>
             </div>
         );
+    },
+    handleDistributionUniformityChanged: function(newDistributionUniformity) {
+        debugger;
+        this.setState({distributionUniformity: newDistributionUniformity});
+        debugger;
+    },
+    handleStationSelectionChanged: function (newSelectedStation) {
+        this.setState({selectedStation: newSelectedStation});
     },
     componentDidMount: function () {
         this.getCMISStations();
