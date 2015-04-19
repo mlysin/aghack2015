@@ -1,72 +1,91 @@
 var pistachioStages = [
   {
     "stage": "Bloom (kc=0.07)",
-    "kc": '0.07'
+    "kc": 0.07
   },
   {
     "stage": "Leaf-out (kc=0.44)",
-    "kc": '0.44'
+    "kc": 0.44
   },
   {
     "stage": "Shell Expansion (kc=0.44)",
-    "kc": '0.44'
+    "kc": 0.44
   },
   {
     "stage": "Shell Expansion (kc=0.68)",
-    "kc": '0.68'
+    "kc": 0.68
   },
   {
     "stage": "Shell Hardening (kc=0.93)",
-    "kc": '0.93'
+    "kc": 0.93
   },
   {
     "stage": "Shell Hardening  (kc=1.10)",
-    "kc": '1.1'
+    "kc": 1.1
   },
   {
     "stage": "Nut Fill (kc=1.19)",
-    "kc": '1.19'
+    "kc": 1.19
   },
   {
     "stage": "Nut Fill Shell Split (kc=1.19)",
-    "kc": '1.19'
+    "kc": 1.19
   },
   {
     "stage": "Shell Splits (kc=0.99)",
-    "kc": '0.99'
+    "kc": 0.99
   },
   {
     "stage": "Hull Slip (kc=0.99)",
-    "kc": '0.99'
+    "kc": 0.99
   },
   {
     "stage": "Harvest (kc=0.87)",
-    "kc": '0.87'
+    "kc": 0.87
   },
   {
     "stage": "Harvest (kc=0.67)",
-    "kc": '0.67'
+    "kc": 0.67
   },
   {
     "stage": "Harvest (kc=0.07)",
-    "kc": '0.07'
+    "kc": 0.07
   },
   {
     "stage": "Post-harvest (kc=0.01)",
-    "kc": '0.01'
+    "kc": 0.01
   },
   {
     "stage": "Dormancy (kc=0.01)",
-    "kc": '0.01'
+    "kc": 0.01
   }
 ]
 
+var almondStages = [
+    {stage: "Inner Shell Hardening (kc=0.32)", kc: 0.32},
+    {stage: "Embryo Enlargement", kc: 0.65},
+    {stage: "Hull Split 33%", kc: 1.03},
+    {stage: "Hull Split 66%", kc: 1.03},
+    {stage: "Hull Split 100%", kc: 1.03},
+    {stage: "Late", kc: 1.15},
+    {stage: "Post-harvest", kc: .01},
+    {stage: "Dormancy", kc: .01}
+];
+
 function getCropStages(crop) {
     if (crop == "Almonds") {
-        return ["Babies", "Teenagers", "Adults", "Dead"]
+        return almondStages;
     } else {
         return pistachioStages;
     }
+}
+
+function getKc(crop, stage) {
+    var cropStages = getCropStages(crop);
+    var stageObj = cropStages.find(function (x) {
+        return x.stage == stage;
+    });
+    return stageObj.kc;
 }
 
 var ExampleApplication = React.createClass({
@@ -146,7 +165,7 @@ var StationSelection = React.createClass({
 var CropSelection = React.createClass({
     render: function () {
         return (
-            <select value={this.props.selected} onChange={this.handleChange}>
+            <select value={this.props.value} onChange={this.handleChange}>
                 <option value="Almonds">Almonds</option>
                 <option value="Pistachios">Pistachios</option>
             </select>
@@ -198,8 +217,11 @@ var PageLayout = React.createClass({
             distributionUniformity: "0.95",
             station: "2",
             crop: "Pistachios",
-            stage: null,
-            area: null
+            stage: 'Bloom (kc=0.07)',
+            gpm: null,
+            area: null,
+            kc: null,
+            et0: null,
         };
     },
     getStationFromStationNumber: function (stationNumber) {
@@ -251,7 +273,14 @@ var PageLayout = React.createClass({
                                                              onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
+                            <input type="text"
+                                   className="form-control"
+                                   id="gpm"
+                                   name="gpm"
+                                   placeholder="Gallons per Minute"
+                                   onChange={this.handleGPMChange}>
+                                {this.state.gpm}
+                            </input>
                         </div>
                     </div>
                     </fieldset>
@@ -259,7 +288,14 @@ var PageLayout = React.createClass({
 
                 <div className="form-group">
                     <div className="col-md-6">
-                        <center><button type="submit" value="Submit" className="answer">Answer</button></center>
+                        <center>
+                            <button type="submit"
+                                    value="Submit"
+                                    onClick={this.handleAnswerClick}
+                                    className="answer">
+                                Answer
+                            </button>
+                        </center>
                     </div>
                 </div>
             </div>
@@ -274,11 +310,19 @@ var PageLayout = React.createClass({
     handleStageChanged: function (newStage) {
         this.setState({stage: newStage});
     },
-    handleAreaChanged: function(newArea) {
-        this.setState({area: newArea});
+    handleAreaChanged: function(event) {
+        event.preventDefault();
+        this.setState({area: event.target.value});
     },
     handleDistributionUniformityChanged: function(newDistributionUniformity) {
         this.setState({distributionUniformity: newDistributionUniformity});
+    },
+    handleGPMChange: function(event) {
+        event.preventDefault();
+        this.setState({gpm: event.target.value});
+    },
+    handleAnswerClick: function () {
+        var kc = getKc(this.state.crop, this.state.stage);
     },
     componentDidMount: function () {
         this.getCMISStations();
