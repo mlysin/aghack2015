@@ -157,7 +157,7 @@ var PageLayout = React.createClass({
                 <h2>Determine Your Evapotranspiration (ET) Rate</h2><br/>
                 <form className="form-horizontal" name="noname">
                     <fieldset style={{textAlign:'center'}}>
-                    <legend><h3>Step 1: Master Inputs</h3></legend>
+                    <legend><h3>Step 1: Master Inputs </h3></legend>
                     <div className="master-info">
                         <div className="col-md-4">
                             <label>Select CMIS Station </label>
@@ -192,7 +192,7 @@ var PageLayout = React.createClass({
                     </fieldset>
 
                     <fieldset style={{textAlign:'center'}}>
-                    <legend><h3>Step 2: Irrigation Set 1</h3></legend>
+                    <legend><h3>Step 2: Irrigation Set 1 </h3></legend>
                     <div className="Irrigation Set 1">
                         <div className="col-md-4">
                             <label>Select Crop </label>
