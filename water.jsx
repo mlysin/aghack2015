@@ -216,51 +216,68 @@ var PageLayout = React.createClass({
             <div>
                 <center><h1>WaterLog™</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2></center>
                 <Map latitude={latitude} longitude={longitude} /><br/>
-                <form className="form-horizontal" name="noname">
+                
+
                     <fieldset style={{textAlign:'center'}}>
-                    <legend><h3>Step 1: Master Inputs </h3></legend>
-                    <div className="master-info">
-                        <div className="col-md-4">
+                    <legend><h3>Enter the Following </h3></legend>
+
+                    <div className="form">
+
+
+                        <div id="dropdown">
                             <label>CMIS Station </label>
-                            <StationSelection stations={this.state.stations}
+                            <div id="entry">
+                                <StationSelection stations={this.state.stations}
                                               selected={this.state.station}
                                               onChange={this.handleStationSelectionChanged} />
+                            </div>
                         </div>
-                        <div className="col-md-4">
+
+
+                        <div id="dropdown">
                             <label>Select Crop </label>
-                            <CropSelection value={this.state.crop}
+                            <div id="entry">
+                                <CropSelection value={this.state.crop}
                                            onChange={this.handleCropChanged} />
+                            </div>
                        </div>
-                        <div className="col-md-4">
+                        <div id="dropdown">
                             <label>Crop Stage </label>
-                            <StageSelection value={this.state.stage}
+                            <div id="entry">
+                                <StageSelection value={this.state.stage}
                                             options={cropStages}
                                             onChange={this.handleStageChanged} />
+                            </div>
                        </div>                       
-                        <div className="col-md-4">
+                        <div id="type-in">
                             <label>Set Area (acres) </label>
-                            <input type="text"
-                                   placeholder="100"
-                                   onChange={this.handleAreaChanged}>
-                                {this.state.area}
-                            </input>
+                            <div id="entry">
+                                <input type="text"
+                                       placeholder="100"
+                                       onChange={this.handleAreaChanged}>
+                                    {this.state.area}
+                                </input>
+                            </div>
                         </div>
-                        <div className="col-md-4">
-                            <label>Select Distribution Uniformity </label>
-                            <DistributionUniformitySelection value={this.state.distributionUniformity}
+                        <div id="dropdown">
+                            <label>Distribution Uniformity </label>
+                            <div id="entry">
+                                <DistributionUniformitySelection value={this.state.distributionUniformity}
                                                              onChange={this.handleDistributionUniformityChanged} />
+                            </div>
                         </div>
-                        <div className="col-md-4">
-                            <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
+                        <div className="type-in">
+                            <label>Water </label>
+                            <div id="entry">
+                                <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
+                            </div>
                         </div>
                     </div>
                     </fieldset>
-                </form>
 
-                <div className="form-group">
-                    <div className="col-md-6">
-                        <center><button type="submit" value="Submit" className="answer">Answer</button></center>
-                    </div>
+
+                <div id="answer">
+                    <center><button class="button-lrg">Calculate</button></center>
                 </div>
             </div>
         );
