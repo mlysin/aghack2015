@@ -220,8 +220,7 @@ var PageLayout = React.createClass({
             stage: 'Bloom (kc=0.07)',
             gpm: null,
             area: null,
-            kc: null,
-            et0: null,
+            eto: null,
         };
     },
     getStationFromStationNumber: function (stationNumber) {
@@ -234,6 +233,15 @@ var PageLayout = React.createClass({
         var cropStages = getCropStages(this.state.crop);
         var latitude = station ? station.latitude : "30";
         var longitude = station ? station.longitude : "30";
+
+        var theAnswer = null;
+        if (this.state.eto && this.state.area && this.state.gpm) {
+            debugger;
+            var kc = getKc(this.state.crop, this.state.stage);
+            var flowRate = this.calculateWateringHours(this.state.eto, kc, this.state.gpm, this.state.area);
+            theAnswer = <div>Answer is {flowRate}</div>;
+        }
+
         return (
             <div>
                 <center><h1>WaterLog™</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2></center>
@@ -293,7 +301,7 @@ var PageLayout = React.createClass({
                         <div className="type-in">
                             <label>Water </label>
                             <div id="entry">
-                                <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
+                                <input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
                             </div>
                         </div>
                     </div>
@@ -303,6 +311,7 @@ var PageLayout = React.createClass({
                 <div id="answer">
                     <center><button class="button-lrg" onClick={this.handleAnswerClick}>Calculate</button></center>
                 </div>
+                {theAnswer}
             </div>
         );
     },
@@ -327,20 +336,41 @@ var PageLayout = React.createClass({
         this.setState({gpm: event.target.value});
     },
     handleAnswerClick: function () {
-        var et0 = 1;
-        var kc = getKc(this.state.crop, this.state.stage);
-        this.calcFlowRate(et0, kc, this.state.gpm, this.state.area);
+        this.getETO(this.state.station);
+        var eto = 1;
     },
     componentDidMount: function () {
         this.getCMISStations();
     },
-    calcFlowRate: function (et0, kc, gallonsPerMinute, acres) {
-        var sqFt = 43560 * parseInt(acres);
-        var inchesPerHour = 96.3 * parseInt(gallonsPerMinute) / sqFt;
-        var etc = parseInt(et0) * kc;
+    calculateWateringHours: function (eto, kc, gallonsPerMinute, acres) {
+        var sqFt = 43560 * parseFloat(acres);
+        var inchesPerHour = 96.3 * parseFloat(gallonsPerMinute) / sqFt;
+        var etc = parseFloat(eto) * kc;
         var hours = etc / inchesPerHour;
-        console.log("assuming et0=1, gotta water for", hours);
+        return hours;
     },
+    getETO: function (station) {
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        var startDate = yesterday.getFullYear() + "-" + yesterday.getMonth() + "-" + yesterday.getDay();
+        $.ajax({
+            url: 'http://et.water.ca.gov/api/data',
+            data: {
+                appKey: 'e8235990-5a60-4f7d-a1a7-d0012716e258',
+                startDate: startDate,
+                endDate: startDate,
+                targets: station,
+                dataItems: 'day-eto'
+            },
+            success: function (response) {
+                if (this.isMounted()) {
+                    this.setState({
+                        eto: response.Data.Providers[0].Records[0].DayEto.Value
+                    });
+                }
+            }.bind(this)
+        });
+    } ,   
     getCMISStations: function () {
         $.ajax({
             url: 'http://et.water.ca.gov/api/station',
