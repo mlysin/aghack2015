@@ -135,7 +135,9 @@ var PageLayout = React.createClass({
 
             distributionUniformity: "0.95",
             station: "2",
-            crop: "Almonds"
+            crop: "Almonds",
+            stage: null,
+            area: null
         };
     },
     getStationFromStationNumber: function (stationNumber) {
@@ -180,7 +182,11 @@ var PageLayout = React.createClass({
                                             onChange={this.handleStageChanged} />
                        </div>                       
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="ECw" name="ECw" placeholder="Water Threshold"/>
+                            <input type="text"
+                                   placeholder="Set Area (acres)"
+                                   onChange={this.handleAreaChanged}>
+                                {this.state.area}
+                            </input>
                         </div>
                     </div>
                     </fieldset>
@@ -221,9 +227,6 @@ var PageLayout = React.createClass({
             </div>
         );
     },
-    handleDistributionUniformityChanged: function(newDistributionUniformity) {
-        this.setState({distributionUniformity: newDistributionUniformity});
-    },
     handleStationSelectionChanged: function (newStation) {
         this.setState({station: newStation});
     },
@@ -232,6 +235,12 @@ var PageLayout = React.createClass({
     },
     handleStageChanged: function (newStage) {
         this.setState({stage: newStage});
+    },
+    handleAreaChanged: function(newArea) {
+        this.setState({area: newArea});
+    },
+    handleDistributionUniformityChanged: function(newDistributionUniformity) {
+        this.setState({distributionUniformity: newDistributionUniformity});
     },
     componentDidMount: function () {
         this.getCMISStations();
