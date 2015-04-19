@@ -1,22 +1,6 @@
 function getStations (success) {
     debugger;
-    $.ajax({
-        url: 'http://et.water.ca.gov/api/station',
-        data: {
-            appKey: 'e8235990-5a60-4f7d-a1a7-d0012716e258',
-        },
-        success: function (response) {
-            var stations = response.Stations.map(function (rawStation) {
-                return {
-                    name: rawStation.Name,
-                    number: rawStation.StationNbr,
-                    latitude: rawStation.HmsLatitude.split('/')[1].replace(/ /g, ''),
-                    longitude: rawStation.HmsLongitude.split('/')[1].replace(/ /g, '')
-                }
-            });
-            success(stations);
-        }.bind(this)
-    });
+
 }
 
 function getEto (station, success) {
@@ -81,7 +65,25 @@ var Map = React.createClass({
     }
 })
 
+var StationSelection = React.createClass({
+    render: function () {
+        return (
+            <select>
+                {this.props.stations.map(function (station) {
+                    return <option key={station.number} value={station.number}>{station.name}</option>
+
+                })}
+            </select>
+        )
+    }
+})
+
 var PageLayout = React.createClass({
+    getInitialState: function () {
+        return {
+            stations: []
+        };
+    },
     render: function () {
         return (
             <div>
@@ -93,7 +95,8 @@ var PageLayout = React.createClass({
                     <legend>Step 1: Master Inputs</legend>
                     <div className="master-info">
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="CIMIS" name="CIMIS" placeholder="CIMIS Station"/>
+                            <label>Select CMIS Station</label>
+                            <StationSelection stations={this.state.stations}/>
                         </div>
                         <div className="col-md-4">
                             <input type="text" className="form-control" id="DU" name="DU" placeholder="Distribution Uniformity"/>
@@ -155,5 +158,40 @@ var PageLayout = React.createClass({
                 </div>
             </div>
         );
+    },
+    componentDidMount: function () {
+        this.getCMISStations();
+    },
+    getCMISStations: function () {
+        $.ajax({
+            url: 'http://et.water.ca.gov/api/station',
+            data: {
+                appKey: 'e8235990-5a60-4f7d-a1a7-d0012716e258',
+            },
+            success: function (response) {
+                var stations = response.Stations.map(function (rawStation) {
+                    if (rawStation.IsActive == "False" || rawStation.IsEtoStation == "False") {
+                        return null
+                    }
+                    return {
+                        name: rawStation.Name,
+                        number: rawStation.StationNbr,
+                        latitude: rawStation.HmsLatitude.split('/')[1].replace(/ /g, ''),
+                        longitude: rawStation.HmsLongitude.split('/')[1].replace(/ /g, '')
+                    }
+                }).filter(function (station) {
+                    return station !== null;
+                }).sort(function (a,b) {
+                    if (a.name < b.name) {
+                        return -1;
+                    } else if (a.name > b.name) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                });
+                this.setState({stations: stations});
+            }.bind(this)
+        });
     }
 });
