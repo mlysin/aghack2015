@@ -1,1 +1,95 @@
-# aghack 2015
+<!DOCTYPE html>
+<head>
+	<title>Water Log</title>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<iframe
+	width="600"
+	height="450"
+	frameborder="0" style="border:0"
+	https://www.google.com/maps/embed/v1/view?key=AIzaSyA8hwDuDCkVqQYanytN0MxWK4vyR0rJ3jY
+		&center=-33.8569,151.2152
+		&zoom=18
+  		&maptype=satellite>
+</iframe>
+
+</head>
+
+<body>
+	<h1>WaterLog</h1>
+	<h2>What's Your ET rate?</h2><br>
+	 
+	<div class="row">
+	<form class="form-horizontal" name="noname">
+	    <fieldset style="text-align:center;">
+	    <legend>Step 1: Master Inputs</legend>
+	    <div class="master-info">
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="CIMIS" name="CIMIS" placeholder="CIMIS Station"/>
+	        </div>
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="DU" name="DU" placeholder="Distribution Uniformity"/>
+	        </div>
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="ECa" name="ECa" placeholder="Extract Threshold"/>
+	        </div>
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="ECw" name="ECw" placeholder="Water Threshold"/>
+	        </div>
+	    </div></p>
+	    </fieldset>
+
+	    <fieldset style="text-align:center;">
+	    <legend>Step 2: Irrigation Set 1</legend>
+	    <div class="Irrigation Set 1">
+	        <div class="col-md-4">
+	            <label>Select Crop</label>
+	            <select id = "crop">
+            		<option value = "1">Pistachio</option>
+            		<option value = "2">Almond</option>
+            	</select>
+	        </div>
+	        <div class="col-md-4">
+	            <label>Select Stage</label>
+	            <select id = "crop">
+            		<option value = "1">Early</option>
+            		<option value = "2">Medium</option>
+            		<option value = "3">Late</option>
+            	</select>
+	        </div>
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="area" name="area" placeholder="Area"/>
+	        </div>
+	        <div class="col-md-4">
+	            <input type="text" class="form-control" id="gpm" name="gpm" placeholder="GPM (meters)"/>
+	        </div>
+	    </div></p>
+	    </fieldset>
+	</form>
+
+
+	<form>
+       <fieldset>
+          <legend>Selecting elements</legend>
+          <p>
+             <label>Select list</label>
+             <select id = "crop">
+               <option value = "1">Pistachio</option>
+               <option value = "2">Almond</option>
+             </select>
+          </p>
+       </fieldset>
+    </form>
+
+    <div class="form-group">
+        <div class="col-md-6">
+            <button type="submit" value="Submit" class="btn btn-warning pull-right">Answer</button>
+        </div>
+    </div>
+</form>
+</div><!-- /row -->
+</div><!-- /container -->
+</body>
+
+<footer></footer>
+</html>
