@@ -59,6 +59,11 @@ var Map = React.createClass({
     render: function () {
         return (
             <div>
+                <iframe 
+                    width="100%"
+                    height="300"
+                    src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA8hwDuDCkVqQYanytN0MxWK4vyR0rJ3jY&center=36.150269,-120.3486774&zoom=10&maptype=satellite"></iframe>
+                
                 Here&rsquo;s where the map goes... Latitude is {this.props.latitude} longitude is {this.props.longitude}
             </div>
         );
