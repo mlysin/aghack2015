@@ -159,23 +159,23 @@ var PageLayout = React.createClass({
                     <legend><h3>Step 1: Master Inputs </h3></legend>
                     <div className="master-info">
                         <div className="col-md-4">
-                            <label>Select CMIS Station </label>
+                            <label>CMIS Station </label>
                             <StationSelection stations={this.state.stations}
                                               selected={this.state.station}
                                               onChange={this.handleStationSelectionChanged} />
                         </div>
                         <div className="col-md-4">
-                            <label>Select Distribution Uniformity </label>
+                            <label>Distribution Uniformity </label>
                             <DistributionUniformitySelection value={this.state.distributionUniformity}
                                                              onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
-                            <label>Select Crop </label>
+                            <label>Extract Threshold </label>
                             <CropSelection value={this.state.crop}
                                            onChange={this.handleCropChanged} />
                        </div>
                         <div className="col-md-4">
-                            <label>Select Crop Stage </label>
+                            <label>Water Threshold </label>
                             <StageSelection value={this.state.stage}
                                             options={cropStages}
                                             onChange={this.handleStageChanged} />
@@ -194,14 +194,14 @@ var PageLayout = React.createClass({
                     <legend><h3>Step 2: Irrigation Set 1 </h3></legend>
                     <div className="Irrigation Set 1">
                         <div className="col-md-4">
-                            <label>Select Crop </label>
+                            <label>Crop </label>
                             <select id = "crop">
                                 <option value = "1">Pistachio</option>
                                 <option value = "2">Almond</option>
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <label>Select Stage </label>
+                            <label>Stage </label>
                             <select id = "crop">
                                 <option value = "1">Early</option>
                                 <option value = "2">Medium</option>
@@ -209,10 +209,10 @@ var PageLayout = React.createClass({
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="area" name="area" placeholder="Area (acres)"/>
+                            <input type="text" className="form-control" id="area" name="area" placeholder="Acreage Area"/>
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="gpm" name="gpm" placeholder="GPM (meters)"/>
+                            <input type="text" className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
                         </div>
                     </div>
                     </fieldset>
