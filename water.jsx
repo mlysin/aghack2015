@@ -152,19 +152,19 @@ var PageLayout = React.createClass({
             <div>
                 <h1>WaterLog</h1>
                 <Map latitude={latitude} longitude={longitude} />
-                <h2>What&rsquo;s Your ET rate</h2><br/>
+                <h2>Determine Your Evapotranspiration (ET) Rate</h2><br/>
                 <form className="form-horizontal" name="noname">
                     <fieldset style={{textAlign:'center'}}>
-                    <legend>Step 1: Master Inputs</legend>
+                    <legend><h3>Step 1: Master Inputs</h3></legend>
                     <div className="master-info">
                         <div className="col-md-4">
-                            <label>Select CMIS Station</label>
+                            <label>Select CMIS Station </label>
                             <StationSelection stations={this.state.stations}
                                               selected={this.state.station}
                                               onChange={this.handleStationSelectionChanged} />
                         </div>
                         <div className="col-md-4">
-                            <label>Select Distribution Uniformity</label>
+                            <label>Select Distribution Uniformity </label>
                             <DistributionUniformitySelection value={this.state.distributionUniformity}
                                                              onChange={this.handleDistributionUniformityChanged} />
                         </div>
@@ -186,17 +186,17 @@ var PageLayout = React.createClass({
                     </fieldset>
 
                     <fieldset style={{textAlign:'center'}}>
-                    <legend>Step 2: Irrigation Set 1</legend>
+                    <legend><h3>Step 2: Irrigation Set 1</h3></legend>
                     <div className="Irrigation Set 1">
                         <div className="col-md-4">
-                            <label>Select Crop</label>
+                            <label>Select Crop </label>
                             <select id = "crop">
                                 <option value = "1">Pistachio</option>
                                 <option value = "2">Almond</option>
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <label>Select Stage</label>
+                            <label>Select Stage </label>
                             <select id = "crop">
                                 <option value = "1">Early</option>
                                 <option value = "2">Medium</option>
@@ -211,19 +211,6 @@ var PageLayout = React.createClass({
                         </div>
                     </div>
                     </fieldset>
-                </form>
-
-                <form>
-                   <fieldset>
-                      <legend>Selecting elements</legend>
-                      <p>
-                         <label>Select list</label>
-                         <select id = "crop">
-                           <option value = "1">Pistachio</option>
-                           <option value = "2">Almond</option>
-                         </select>
-                      </p>
-                   </fieldset>
                 </form>
 
                 <div className="form-group">
