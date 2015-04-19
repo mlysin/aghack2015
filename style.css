@@ -3,7 +3,7 @@ h1 {
 	font-family: 'Raleway', monospace;
 	letter-spacing:-1px;
 	font-weight: 900; 
-	margin-bottom:-0.6em; 
+	margin-bottom:-0.2em; 
 	color: #000000;
 	text-shadow: 0px 0 black, 0 1px black, 1px 0 black, 0 0px black;
 }
@@ -16,6 +16,8 @@ h2 {
 }
 h3 { 
 	font-family: 'Open Sans', sans-serif;
+	margin-top: 0.4em; 
+	margin-bottom:0.1em;
 }
 body { 
 	font-family: 'Open Sans', sans-serif; 
@@ -24,4 +26,5 @@ body {
 fieldset {
 	border-color: white;
 	box-shadow: none;
+
 }

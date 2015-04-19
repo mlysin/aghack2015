@@ -244,85 +244,72 @@ var PageLayout = React.createClass({
 
         return (
             <div id >
-                <center><h1>WaterLog</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2></center>
+                <center><h1>WaterLog</h1><h2>The Scientific Irrigation Scheduling System that Saves Millions</h2></center>
                 <Map latitude={latitude} longitude={longitude} /><br/>
                 
-                    
-                    <legend><h3>Enter the Following </h3></legend>
 
-                    <div className="form">
+                <legend><h3>some question</h3></legend>
 
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>CMIS Station</h3></legend>
-                        <div id="dropdown">
-                            <div id="entry">
-                                <StationSelection stations={this.state.stations}
-                                              selected={this.state.station}
-                                              onChange={this.handleStationSelectionChanged} />
-                            </div>
+                <div id="pure-table">
+                    <div id="tbody">
+                        <div id="row">
+                            <div id="name"><h3>CMIS Station</h3></div>
+                            <div id="dropdown"><StationSelection stations={this.state.stations}
+                                                  selected={this.state.station}
+                                                  onChange={this.handleStationSelectionChanged} /></div>
                         </div>
-                        </fieldset>
-
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>Select Crop</h3></legend>
-                        <div id="dropdown">
-                            <div id="entry">
-                                <CropSelection value={this.state.crop}
-                                           onChange={this.handleCropChanged} />
-                            </div>
+                        <div id="row">
+                            <div id="name"><h3>Select Crop</h3></div>
+                            <div id="dropdown"><CropSelection value={this.state.crop}
+                                               onChange={this.handleCropChanged} /></div>
                         </div>
-                        </fieldset>
+                        <div id="row">
+                            <div id="name"><h3>Crop Stage</h3></div>
+                            <div id="dropdown"><StageSelection value={this.state.stage}
+                                                options={cropStages}
+                                                onChange={this.handleStageChanged} /></div>
+                        </div>
+                        <div id="row">
+                            <div id="name"><h3>Distribution Uniformity</h3></div>
+                            <div id="dropdown"><DistributionUniformitySelection value={this.state.distributionUniformity}
+                                                                 onChange={this.handleDistributionUniformityChanged} /></div>
+                        </div>
+                    </div>
+                </div>
 
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>Crop Stage</h3></legend>
-                        <div id="dropdown">
-                            <div id="entry">
-                                <StageSelection value={this.state.stage}
-                                            options={cropStages}
-                                            onChange={this.handleStageChanged} />
-                            </div>
-                        </div> 
-                        </fieldset>
-
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>Set Area (acres)</h3></legend>
-                        <div id="type-in">
-                            <div id="entry">
-                                <input type="text"
+                <table class="pure-table">
+                    <tbody>
+                        <tr>
+                            <td><h3>Set Area (acres)</h3></td>
+                            <td><input type="text"
                                        placeholder="100"
                                        onChange={this.handleAreaChanged}>
                                     {this.state.area}
-                                </input>
-                            </div>
-                        </div>
-                        </fieldset>
+                                </input></td>
+                        </tr>
+                        <tr>
+                            <td><h3>Water</h3></td>
+                            <td><input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/></td>
+                        </tr>
+                        <tr>
+                            <td>thing 1</td>
+                            <td>some text</td>
+                        </tr>
+                        <tr>
+                            <td>thing 2</td>
+                            <td>some more text</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>Distribution Uniformity</h3></legend>
-                        <div id="dropdown">
-                            <div id="entry">
-                                <DistributionUniformitySelection value={this.state.distributionUniformity}
-                                                             onChange={this.handleDistributionUniformityChanged} />
-                            </div>
-                        </div>
-                        </fieldset>
-
-                        <fieldset style={{textAlign:'center'}}>
-                        <legend><h3>Water</h3></legend>
-                        <div className="type-in">
-                            <div id="entry">
-                                <input type="text" onChange={this.handleGPMChange} className="form-control" id="gpm" name="gpm" placeholder="Gallons per Minute"/>
-                            </div>
-                        </div>
-                        </fieldset>
-
-                    </div>
-
-
-                <div id="answer">
-                    <center><button class="button-lrg" onClick={this.handleAnswerClick}>Calculate</button></center>
-                </div>
-                {theAnswer}
+                <table class="pure-table">
+                    <tbody>
+                        <tr>
+                            <td><button class="pure-button pure-button-primary" onClick={this.handleAnswerClick}>Calculate</button></td>
+                            <td>{theAnswer}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         );
     },
