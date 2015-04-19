@@ -152,7 +152,7 @@ var PageLayout = React.createClass({
         var longitude = station ? station.longitude : "30";
         return (
             <div>
-                <h1>WaterLog</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2>
+                <h1>WaterLog™</h1><h2>Determine Your Evapotranspiration (ET) Rate</h2>
                 <Map latitude={latitude} longitude={longitude} /><br/>
                 <form className="form-horizontal" name="noname">
                     <fieldset style={{textAlign:'center'}}>
