@@ -299,8 +299,25 @@ var PageLayout = React.createClass({
     handleDistributionUniformityChanged: function(newDistributionUniformity) {
         this.setState({distributionUniformity: newDistributionUniformity});
     },
+    handleGPMChange: function(event) {
+        event.preventDefault();
+        this.setState({gpm: event.target.value});
+    },
+    handleAnswerClick: function () {
+        var et0 = 1;
+        var kc = getKc(this.state.crop, this.state.stage);
+        this.calcFlowRate(et0, kc, this.state.gpm, this.state.area);
+    },
     componentDidMount: function () {
         this.getCMISStations();
+    },
+    calcFlowRate: function (et0, kc, gallonsPerMinute, acres) {
+        // delete
+        var sqFt = 43560 * parseInt(acres);
+        var inchesPerHour = 96.3 * parseInt(gallonsPerMinute) / sqFt;
+        var etc = parseInt(et0) * kc;
+        var hours = etc / inchesPerHour;
+        console.log("assuming et0=1, gotta water for", hours);
     },
     getCMISStations: function () {
         $.ajax({
