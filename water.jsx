@@ -109,14 +109,22 @@ var PageLayout = React.createClass({
             stations: [],
 
             distributionUniformity: "0.95",
-            station: null,
+            station: "2",
         };
     },
+    getStationFromStationNumber: function (stationNumber) {
+        return this.state.stations.find(function(station) {
+            return station.number === stationNumber;
+        });
+    },
     render: function () {
+        var station = this.getStationFromStationNumber(this.state.station);
+        var latitude = station ? station.latitude : "30";
+        var longitude = station ? station.longitude : "30";
         return (
             <div>
                 <h1>WaterLog</h1>
-                <Map latitude="30" longitude="30"/>
+                <Map latitude={latitude} longitude={longitude} />
                 <h2>What&rsquo;s Your ET rate</h2><br/>
                 <form className="form-horizontal" name="noname">
                     <fieldset style={{textAlign:'center'}}>
@@ -125,7 +133,7 @@ var PageLayout = React.createClass({
                         <div className="col-md-4">
                             <label>Select CMIS Station</label>
                             <StationSelection stations={this.state.stations}
-                                              selected={this.props.station}
+                                              selected={this.state.station}
                                               onChange={this.handleStationSelectionChanged} />
                         </div>
                         <div className="col-md-4">
@@ -196,8 +204,8 @@ var PageLayout = React.createClass({
         this.setState({distributionUniformity: newDistributionUniformity});
         debugger;
     },
-    handleStationSelectionChanged: function (newSelectedStation) {
-        this.setState({selectedStation: newSelectedStation});
+    handleStationSelectionChanged: function (newStation) {
+        this.setState({station: newStation});
     },
     componentDidMount: function () {
         this.getCMISStations();
