@@ -1,10 +1,7 @@
-function getStations (success) {
-    debugger;
-
-}
-
-function getEto (station, success) {
-
+function getCropStages(crop) {
+    if (crop == "Almonds") {
+        return ["Babies", "Teenagers", "Adults", "Dead"]
+    }
 }
 
 var ExampleApplication = React.createClass({
@@ -60,12 +57,7 @@ var Map = React.createClass({
         var url = "https://www.google.com/maps/embed/v1/view?key=AIzaSyA8hwDuDCkVqQYanytN0MxWK4vyR0rJ3jY&center=" + this.props.latitude + "," + this.props.longitude + "&zoom=10&maptype=satellite";
         return (
             <div>
-                <iframe 
-                    width="100%"
-                    height="300"
-                    src={url}></iframe>
-                
-                Here&rsquo;s where the map goes... Latitude is {this.props.latitude} longitude is 
+                <iframe width="100%" height="300" src={url}></iframe>
             </div>
         );
     }
@@ -85,7 +77,40 @@ var StationSelection = React.createClass({
         event.preventDefault();
         this.props.onChange(event.target.value);
     }
-})
+});
+
+var CropSelection = React.createClass({
+    render: function () {
+        return (
+            <select value={this.props.selected} onChange={this.handleChange}>
+                <option value="Almonds">Almonds</option>
+                <option value="Pistachios">Pistachios</option>
+            </select>
+        )
+    },
+    handleChange: function (event) {
+        debugger;
+        event.preventDefault();
+        this.props.onChange(event.target.value);
+    }
+});
+
+var StageSelection = React.createClass({
+    render: function () {
+        debugger;
+        return (
+            <select value={this.props.value} onChange={this.handleChange}>
+                {this.props.options.map(function (option) {
+                    return <option key={option} value={option}>{option}</option>
+                })}
+            </select>
+        )
+    },
+    handleChange: function (event) {
+        event.preventDefault();
+        this.props.onChange(event.target.value);
+    }
+});
 
 var DistributionUniformitySelection = React.createClass({
     render: function () {
@@ -110,6 +135,7 @@ var PageLayout = React.createClass({
 
             distributionUniformity: "0.95",
             station: "2",
+            crop: "Almonds"
         };
     },
     getStationFromStationNumber: function (stationNumber) {
@@ -119,6 +145,7 @@ var PageLayout = React.createClass({
     },
     render: function () {
         var station = this.getStationFromStationNumber(this.state.station);
+        var cropStages = getCropStages(this.state.crop);
         var latitude = station ? station.latitude : "30";
         var longitude = station ? station.longitude : "30";
         return (
@@ -142,8 +169,16 @@ var PageLayout = React.createClass({
                                                              onChange={this.handleDistributionUniformityChanged} />
                         </div>
                         <div className="col-md-4">
-                            <input type="text" className="form-control" id="ECa" name="ECa" placeholder="Extract Threshold"/>
-                        </div>
+                            <label>Select Crop</label>
+                            <CropSelection value={this.state.crop}
+                                           onChange={this.handleCropChanged} />
+                       </div>
+                        <div className="col-md-4">
+                            <label>Select Crop Stage</label>
+                            <StageSelection value={this.state.stage}
+                                            options={cropStages}
+                                            onChange={this.handleStageChanged} />
+                       </div>                       
                         <div className="col-md-4">
                             <input type="text" className="form-control" id="ECw" name="ECw" placeholder="Water Threshold"/>
                         </div>
@@ -200,12 +235,16 @@ var PageLayout = React.createClass({
         );
     },
     handleDistributionUniformityChanged: function(newDistributionUniformity) {
-        debugger;
         this.setState({distributionUniformity: newDistributionUniformity});
-        debugger;
     },
     handleStationSelectionChanged: function (newStation) {
         this.setState({station: newStation});
+    },
+    handleCropChanged: function (newCrop) {
+        this.setState({crop: newCrop});
+    },
+    handleStageChanged: function (newStage) {
+        this.setState({stage: newStage});
     },
     componentDidMount: function () {
         this.getCMISStations();
