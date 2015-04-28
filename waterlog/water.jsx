@@ -258,7 +258,7 @@ var PageLayout = React.createClass({
 
         return (
             <div id="body">
-                <center><h1>WaterLog</h1><h2>The Scientific Irrigation Scheduling System that Saves Millions</h2></center>
+                <center><h1>Growers&rsquo; Toolkit™ </h1><h2>The Scientific Irrigation Scheduling System that Saves Millions</h2></center>
                 <Map latitude={latitude} longitude={longitude} />
                 
                 <div className="header">Do you want to save some money? Maybe some water, too?</div>
